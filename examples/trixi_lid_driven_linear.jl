@@ -16,13 +16,12 @@ using CairoMakie
 # polyester = false
 # ```
 
-@assert !Trixi._PREFERENCE_POLYESTER
-@assert !Trixi._PREFERENCE_LOOPVECTORIZATION
+#@assert !Trixi._PREFERENCE_POLYESTER
+#@assert !Trixi._PREFERENCE_LOOPVECTORIZATION
 
 trixi_include(joinpath(examples_dir(), "tree_2d_dgsem", "elixir_navierstokes_lid_driven_cavity.jl"), sol = nothing, mu = 0.1);
 
 ode = semidiscretize(semi, (0.0, 10.0))
-
 ###############################################################################
 # run the simulation
 
@@ -30,7 +29,7 @@ sol = solve(
 	ode, 
      Implicit.RKLSSPIMEX332();
 	#Implicit.KS22();
-    dt = 0.001, # solve needs some value here but it will be overwritten by the stepsize_callback
+    dt = 0.01/8, # solve needs some value here but it will be overwritten by the stepsize_callback
 	ode_default_options()..., callback = callbacks,
 	# verbose=1,
 	krylov_algo = :gmres,
